@@ -95,8 +95,28 @@ zentas(Zentas, UosvisUosve) :-
 %?- zentas(alesius, petras).      % true
 
 % 33. daugiavaike(Motina) - Asmuo Motina yra daugiavaikė motina: turi ne mažiau kaip 3 vaikus;
-vaikai(Motina, Vaikai) :- findall(Vaikas, mama(Motina, Vaikas), Vaikai).
-daugiavaike(Motina) :- vaikai(Motina, Vaikai), length(Vaikai, VaikuSk), VaikuSk >= 3.
+%el_in_list(_, []) :- false.
+%el_in_list(El, [El|_]) :- true.
+%el_in_list(El, [_|Ls]) :- el_in_list(El, Ls).
+
+%vaikai(Motina, Vaikai) :- mama(Motina, Vaikas), el_in_list(Vaikas, Vaikai). % doesnt really work
+%vaikai(Motina, Vaikai) :- findall(Vaikas, mama(Motina, Vaikas), Vaikai).
+%daugiavaike(Motina) :- vaikai(Motina, Vaikai), length(Vaikai, VaikuSk), VaikuSk >= 3.
+%
+%visi_vaikai_(Mama, [Vaikas]) :- mama(Mama, Vaikas).
+% visi_vaikai_(Mama, [Vaikas|Vaikai]) :- mama(Mama, Vaikas), visi_vaikai_(Mama, Vaikai). % problema: vaikai kartojasi `Vaikai` sąraše
+%visi_vaikai_(Mama, [Vaikas|Vaikai]) :-  mama(Mama, Vaikas), visi_vaikai_(Mama, Vaikai), \+ el_in_list(Vaikas, Vaikai). % problema: vaikai kartojasi `Vaikai` sąraše
+%
+%visi_vaikai(_, []) :- true.
+%visi_vaikai(Motina, [Vaikas|Vs]) :-
+%%    \+ el_in_list(Vaikas, Vs)
+%     visi_vaikai(Motina, Vs)
+%    , mama(Motina, Vaikas)
+%    , \+ el_in_list(Vaikas, Vs)
+%    .
+
+daugiavaike(Motina) :- mama(Motina, X), mama(Motina, Y), mama(Motina, Z)
+    , X \= Y, Y \= Z, Z \= X.
 
 
 % [TASK] 30. nepilnametis(Nepilnametis) - Asmuo Nepilnametis yra jaunesnis, nei 18 metų;
