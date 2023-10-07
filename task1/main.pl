@@ -77,11 +77,11 @@ teta(Teta, SunenasDukterecia) :-
     tevas_ar_mama(TM, SunenasDukterecia),
     sese_ar_brolis(TM, Teta).
 
-%?- tevas(alesius, itanas).   % true
-%?- teta(gerda, itanas).      % true
-%?- teta(ieva, mantas).       % true
-%?- teta(giedre, mantas).     % true
-%?- teta(janina, itanas).     % false
+?- tevas(alesius, itanas).   % true
+?- teta(gerda, itanas).      % true
+?- teta(ieva, mantas).       % true
+?- teta(giedre, mantas).     % true
+?- \+ teta(janina, itanas).  % false
 
 
 % 22. zentas(Zentas, UosvisUosve) - Pirmasis asmuo (Zentas) yra antrojo (UosvisUosve) žentas (dukros vyras);
@@ -89,10 +89,10 @@ zentas(Zentas, UosvisUosve) :-
     dukra(Dukra, UosvisUosve),
     pora_(Dukra, Zentas).
 
-%?- zentas(petras, juozepas).     % false
-%?- zentas(juozepas, Ona).        % false
-%?- zentas(juozepas, petras).     % false
-%?- zentas(alesius, petras).      % true
+?- \+ zentas(petras, juozepas).     % false
+?- findall(Ona, zentas(juozepas, Ona), N), N = [].
+?- \+ zentas(juozepas, petras).     % false
+?- zentas(alesius, petras).         % true
 
 % 33. daugiavaike(Motina) - Asmuo Motina yra daugiavaikė motina: turi ne mažiau kaip 3 vaikus;
 
@@ -105,5 +105,5 @@ daugiavaike(Motina) :- mama(Motina, X), mama(Motina, Y), mama(Motina, Z), X \= Y
 % [TASK] 30. nepilnametis(Nepilnametis) - Asmuo Nepilnametis yra jaunesnis, nei 18 metų;
 nepilnametis(Asmuo) :- asmuo(Asmuo, _, Amzius, _), Amzius < 18.
 
-%?- nepilnametis(Mantas).        % [Mantas]
-%?- nepilnametis(ona).           % false
+?- findall(Nepilnametis, nepilnametis(Nepilnametis), Nepilnameciai), Nepilnameciai = [mantas, ieva, giedre].
+?- \+ nepilnametis(ona).
