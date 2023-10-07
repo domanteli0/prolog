@@ -34,11 +34,12 @@ isXiYN(Miestas1, Miestas2, N) :-
 pell(0, 0).
 pell(1, 1).
 pell(N, Pell) :-
-    \+ N is 0,
-    \+ N is 1,
+    N =\= 0,
+    N =\= 1,
     N1 is N - 1,
     N2 is N - 2,
     pell(N1, N_1),
     pell(N2, N_2),
     Pell is 2*N_1 + N_2.
 
+?- pell(10, 2378).

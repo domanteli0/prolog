@@ -71,9 +71,8 @@ sese_ar_brolis(Asmuo1, Asmuo2) :-
 % [TASK] 11. teta(Teta, SunenasDukterecia) - Pirmasis asmuo (Teta) yra antrojo (SunenasDukterecia) teta (tėčio ar mamos sesuo);
 teta(Teta, SunenasDukterecia) :-
     % Mama nėra teta
-    \+ mama(Teta, SunenasDukterecia),
+    mama(Mama, SunenasDukterecia), Mama \= Teta,
     yra_moteris(Teta),
-    % vvvvvvv
     tevas_ar_mama(TM, SunenasDukterecia),
     sese_ar_brolis(TM, Teta).
 
@@ -100,7 +99,6 @@ zentas(Zentas, UosvisUosve) :-
 % daugiavaike(Motina) :- vaikai(Motina, Vs), length(Vs, N), N >= 3.
 
 daugiavaike(Motina) :- mama(Motina, X), mama(Motina, Y), mama(Motina, Z), X \= Y, Y \= Z, Z \= X.
-
 
 % [TASK] 30. nepilnametis(Nepilnametis) - Asmuo Nepilnametis yra jaunesnis, nei 18 metų;
 nepilnametis(Asmuo) :- asmuo(Asmuo, _, Amzius, _), Amzius < 18.
