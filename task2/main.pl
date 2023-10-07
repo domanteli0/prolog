@@ -3,6 +3,29 @@
 % 1. Duotas miestus jungiančių kelių tinklas. Keliai vienakrypčiai, nesudarantys ciklų. Kiekvienas kelias turi savo ilgį. Ši informacija išreiškiama faktais kelias(Miestas1, Miestas2, Atstumas). Apibrėžkite predikatą „galima nuvažiuoti iš miesto X į miestą Y“:
 %   1.5. pravažiavus lygiai N tarpinių miestų.
 
+kelias(vilnius, kaunas, 100).
+kelias(vilnius, panevezys, 200).
+kelias(panevezys, kaunas, 150).
+kelias(panevezys, siauliai, 90).
+kelias(kaunas, klaipeda, 300).
+kelias(panevezys, klaipeda, 250).
+kelias(klaipeda, gargzdai, 10).
+kelias(telsiai, gargzdai, 80).
+kelias(siauliai, telsiai, 80).
+kelias(siauliai, joniskis, 40).
+kelias(joniskis, telsiai, 110).
+
+isXiY(Miestas1, Miestas2) :- kelias(Miestas1, Miestas2, _).
+isXiY(Miestas1, Miestas2) :-
+    kelias(Miestas1, MiestasN, _),
+    kelias(MiestasN, Miestas2, _).
+
+isXiYN(Miestas1, Miestas2, 0) :- kelias(Miestas1, Miestas2, _).
+isXiYN(Miestas1, Miestas2, N) :-
+    kelias(Miestas1, MiestasN, _),
+    isXiYN(MiestasN, Miestas2, N0),
+    N is N0 + 1.
+
 % 4. Duotas natūrinis skaičius N. Naudodami rekursyvųjį algoritmą, raskite:
 %   4.3. N-ąjį Pelo skaičių. Pavyzdžiui:
          % ?- pell(10,Pel).

@@ -3,3 +3,6 @@ task1:
 
 task2:
     swipl -l task2/main.pl
+
+task3:
+    swipl -l task3/main.pl
