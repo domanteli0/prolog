@@ -6,6 +6,29 @@
           %?- skirk_teig_neig([5,-1,-4,3,0],R1,R2).
           %R1 = [5,3], R2 = [-1,-4].
 
+skirk_teig_neig([], [], []).
+skirk_teig_neig([], R1, R2).
+
+% game planas:
+%  * filter meta-predicatas
+%  *
+
+% Append ExtraArg1, ExtraArg2, ... to the argument list of Goal and call the result. For example, call(plus(1), 2, X) will call plus(1, 2, X), binding X to 3.
+
+eq(A, []).
+eq(A, [B|Ls]) :- A = B, eq(A, Ls).
+
+less_than_0([], []).
+less_than_0([A|As], [B|Bs]) :- 0 > A, 0 > B, less_than_0(As, Bs).
+less_than_0([A|As], Bs) :- 0 =< A, less_than_0(As, Bs).
+
+% call(eg(5)
+
+?- \+ eq(5, [5, 5, 6]).
+
+%filter(Pred, [], []).
+%filter(Pred, OG, Filtered) :-
+
 % 2. Paprasti nearitmetiniai predikatai:
 %   2.2. apjungti(SS,R) - sąrašas R gaunamas iš duotojo sąrašų sąrašo SS, sujungus pastarojo sąrašus į bendrą sąrašą. Giliuosius sąrašus apdoroti nėra būtina. Pavyzdžiui:
          %?- apjungti([[a,b],[c],[d,[e,f], g]],R).

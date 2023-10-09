@@ -1,3 +1,7 @@
+% Domantas Keturakis
+% PS III kursas, I gr.
+% Užduotys: 11, 22, 30, 33
+
 % # Užduoties sąlyga
 % Duomenų bazėje saugomi duomenys apie asmenis ir jų giminystės ryšius faktais:
 % ```
@@ -49,11 +53,8 @@ pora_(Asmuo1, Asmuo2) :- pora(Asmuo1, Asmuo2).
 pora_(Asmuo1, Asmuo2) :- pora(Asmuo2, Asmuo1).
 
 
-tevas(Tevas, Vaikas) :- asmuo(Tevas, _, _, _), asmuo(Vaikas, _, _, _),
-    mama(Mama, Vaikas), pora_(Mama, Tevas).
-
-tevas_ar_mama(TevasArMama, Vaikas) :- tevas(TevasArMama, Vaikas).
-tevas_ar_mama(TevasArMama, Vaikas) :- mama(TevasArMama, Vaikas).
+tevas(Tevas, Vaikas) :-
+    mama(Mama, Vaikas), pora_(Mama, Tevas), asmuo(Tevas, _, _, _), asmuo(Vaikas, _, _, _).
 
 vaikas(Vaikas, TevasArMama) :- tevas_ar_mama(TevasArMama, Vaikas).
 dukra(Dukra, TevasArMama) :- tevas_ar_mama(TevasArMama, Dukra), asmuo(Dukra, m, _, _).
@@ -62,19 +63,22 @@ yra_vyras(Asmuo) :- asmuo(Asmuo, v, _, _).
 yra_moteris(Asmuo) :- asmuo(Asmuo, m, _, _).
 
 sese_ar_brolis(Asmuo1, Asmuo2) :-
-    tevas_ar_mama(TevasArMama, Asmuo1),
-    tevas_ar_mama(TevasArMama, Asmuo2).
+    mama(TevasArMama, Asmuo1),
+    mama(TevasArMama, Asmuo2).
 
 % --- [TASKS] ---
 
 
+tevas_ar_mama(TevasArMama, Vaikas) :- tevas(TevasArMama, Vaikas).
+tevas_ar_mama(TevasArMama, Vaikas) :- mama(TevasArMama, Vaikas).
+
 % [TASK] 11. teta(Teta, SunenasDukterecia) - Pirmasis asmuo (Teta) yra antrojo (SunenasDukterecia) teta (tėčio ar mamos sesuo);
 teta(Teta, SunenasDukterecia) :-
-    % Mama nėra teta
-    mama(Mama, SunenasDukterecia), Mama \= Teta,
     yra_moteris(Teta),
     tevas_ar_mama(TM, SunenasDukterecia),
-    sese_ar_brolis(TM, Teta).
+    sese_ar_brolis(TM, Teta),
+    % Mama nėra teta
+    mama(Mama, SunenasDukterecia), Mama \= Teta.
 
 ?- tevas(alesius, itanas).   % true
 ?- teta(gerda, itanas).      % true
