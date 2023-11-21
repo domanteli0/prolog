@@ -118,3 +118,16 @@ min_list(As, Bs, Ls) :-
 ?- min_list([a, b], [v], [v]).
 ?- min_list([a, b, c], [v, a, b, c], [a, b, c]).
 
+add_([A], [B], [C], D) :-
+    (
+        ( A + B #< 10, C #= A + B, D = 0 ) ;
+        ( A + B #>= 10, C #= A + B - 10, D = 1 )
+    ).
+add_([A|As], [B|Bs], [C|Cs], D) :-
+    add_(As, Bs, Cs, D1),
+    (
+        ( A + B + D1 #< 10, C #= A + B + D1, D = 0 ) ;
+        ( A + B + D1 #>= 10, C #= A + B + D1 - 10, D = 1 )
+    ).
+
+?- add_([1, 2], [3, 9], C, 0), C = [5, 1].
