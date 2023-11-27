@@ -109,3 +109,14 @@ nepilnametis(Asmuo) :- asmuo(Asmuo, _, Amzius, _), Amzius < 18.
 
 ?- findall(Nepilnametis, nepilnametis(Nepilnametis), Nepilnameciai), Nepilnameciai = [mantas, ieva, giedre].
 ?- \+ nepilnametis(ona).
+
+
+kaina(A, K):- A < 7,  !, K = 0.
+kaina(A, K):- A < 18, !, K = 1.  %Mokinys
+kaina(A, K):- A < 30, !, K = 10. %Studijuoja
+kaina(A, K):- A > 80, !, K = 0.  %Pensininkas
+kaina(A, K):-
+   /* A >= 30 , A <= 80 */, K = 0.  %Pensininkas
+
+max(X, Y, M):- X >= Y, !, M = X.
+max(X, Y, Y).
