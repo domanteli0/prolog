@@ -13,12 +13,10 @@
 skirk_teig_neig([], [], []).
 skirk_teig_neig([F|Full], [F|Ps], Ns) :-
     F #> 0,
-    !,
     skirk_teig_neig(Full, Ps, Ns).
 
 skirk_teig_neig([F|Full], Ps, [F|Ns]) :-
     F #< 0,
-    !,
     skirk_teig_neig(Full, Ps, Ns).
 
 skirk_teig_neig([_|Full], Ps, Ns) :- skirk_teig_neig(Full, Ps, Ns).
@@ -32,12 +30,12 @@ skirk_teig_neig([_|Full], Ps, Ns) :- skirk_teig_neig(Full, Ps, Ns).
          %R = [a,b,c,d,[e,f],g].
 
 concat([], Rs, Rs).
-concat([E|Ls], Rs, [E|Fs]) :- concat(Ls, Rs, Fs), !.
+concat([E|Ls], Rs, [E|Fs]) :- concat(Ls, Rs, Fs).
 
 apjungti([], []).
-apjungti([S], S).
 apjungti([S|Ss], R) :-
     apjungti(Ss, R1),
+    !,
     concat(S, R1, R).
 
 ?- apjungti([[a,b],[c],[d,[e,f], g]],R), R = [a,b,c,d,[e,f],g].
@@ -51,16 +49,18 @@ apjungti([S|Ss], R) :-
 el_in_list(E, [E|_]).
 el_in_list(E, [X|Ls]) :- el_in_list(E, Ls), X \= E.
 
-el_not_in_list(E, [X|Ls]) :-  X \= E, el_not_in_list(E, Ls).
+el_not_in_list(E, [X|Ls]) :- X \= E, el_not_in_list(E, Ls).
 el_not_in_list(_, []).
 
 skirtumas([], _, []).
 skirtumas([S|S1], S2, [S|R]) :-
     el_not_in_list(S, S2),
+    !,
     skirtumas(S1, S2, R).
 
 skirtumas([S|S1], S2, R) :-
     el_in_list(S, S2),
+    !,
     skirtumas(S1, S2, R).
 
 ?- skirtumas([a,b,c,d],[d,e],R), R = [a,b,c].
@@ -73,9 +73,6 @@ skirtumas([S|S1], S2, R) :-
        %?- suma([9,4,6,1,3,4],[2,8],Sum).
        %Sum = [9,4,6,1,6,2].
 
-list_last([E], E).
-list_last([_|Xs], E) :- list_last(Xs, E).
-
 %rev__([X|Xs], Ys, Zs).
 rev__([], R, R).
 rev__([X|Xs], R, Acc) :- rev__(Xs, R, [X|Acc]), !.
@@ -87,8 +84,8 @@ rev(Xs, Rs) :-
 suma(A, B, C) :-
     rev(A, Ar),
     rev(B, Br),
-    !,
     suma_(Ar, Br, Cr, 0),
+    !,
     rev(C, Cr).
 
 suma_(X, [], X, 0).
@@ -107,7 +104,6 @@ suma_([X|Xs], [Y|Ys], [Z|Zs], C) :-
 suma_([X|Xs], [Y|Ys], [Z|Zs], C) :-
     S #= X + Y + C,
     Z #= S - 10,
-    !,
     suma_(Xs, Ys, Zs, 1).
 
 ?- suma([9,4,6,1,3,4],[2,8],Sum), Sum = [9,4,6,1,6,2].
