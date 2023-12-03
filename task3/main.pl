@@ -13,12 +13,10 @@
 skirk_teig_neig([], [], []).
 skirk_teig_neig([F|Full], [F|Ps], Ns) :-
     F #> 0,
-    !,
     skirk_teig_neig(Full, Ps, Ns).
 
 skirk_teig_neig([F|Full], Ps, [F|Ns]) :-
     F #< 0,
-    !,
     skirk_teig_neig(Full, Ps, Ns).
 
 skirk_teig_neig([_|Full], Ps, Ns) :- skirk_teig_neig(Full, Ps, Ns).
@@ -32,7 +30,7 @@ skirk_teig_neig([_|Full], Ps, Ns) :- skirk_teig_neig(Full, Ps, Ns).
          %R = [a,b,c,d,[e,f],g].
 
 concat([], Rs, Rs).
-concat([E|Ls], Rs, [E|Fs]) :- concat(Ls, Rs, Fs), !.
+concat([E|Ls], Rs, [E|Fs]) :- concat(Ls, Rs, Fs).
 
 apjungti([], []).
 apjungti([S], S).
@@ -78,7 +76,7 @@ list_last([_|Xs], E) :- list_last(Xs, E).
 
 %rev__([X|Xs], Ys, Zs).
 rev__([], R, R).
-rev__([X|Xs], R, Acc) :- rev__(Xs, R, [X|Acc]), !.
+rev__([X|Xs], R, Acc) :- rev__(Xs, R, [X|Acc]).
 
 rev(Xs, Rs) :-
     rev__(Xs, Rs, []).
@@ -87,7 +85,6 @@ rev(Xs, Rs) :-
 suma(A, B, C) :-
     rev(A, Ar),
     rev(B, Br),
-    !,
     suma_(Ar, Br, Cr, 0),
     rev(C, Cr).
 
@@ -101,13 +98,11 @@ suma_([], Xs, Ys, 1) :-
 suma_([X|Xs], [Y|Ys], [Z|Zs], C) :-
     Z #= X + Y + C,
     Z #< 10,
-    !,
     suma_(Xs, Ys, Zs, 0).
 
 suma_([X|Xs], [Y|Ys], [Z|Zs], C) :-
     S #= X + Y + C,
     Z #= S - 10,
-    !,
     suma_(Xs, Ys, Zs, 1).
 
 ?- suma([9,4,6,1,3,4],[2,8],Sum), Sum = [9,4,6,1,6,2].
