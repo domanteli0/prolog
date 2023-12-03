@@ -83,23 +83,37 @@ rev__([X|Xs], R, Acc) :- rev__(Xs, R, [X|Acc]), !.
 rev(Xs, Rs) :-
     rev__(Xs, Rs, []).
 
+% suma([9,4,6,1,3,4], A, [9,4,6,1,6,2]).
 suma(A, B, C) :-
-    rev(A, A1),
-    rev(B, B1),
-    suma_(A1, B1, C1, 0),
-    rev(C, C1).
+    rev(A, Ar),
+    rev(B, Br),
+    !,
+    suma_(Ar, Br, Cr, 0),
+    rev(C, Cr).
+
+suma_(X, [], X, 0).
+suma_([], X, X, 0).
+suma_(Xs, [], Ys, 1) :-
+    suma_(Xs, [0], Ys, 1).
+suma_([], Xs, Ys, 1) :-
+    suma_(Xs, [0], Ys, 1).
 
 suma_([X|Xs], [Y|Ys], [Z|Zs], C) :-
-    S #= X + Y + C,
-    S #< 10,
-    Z #= S,
+    Z #= X + Y + C,
+    Z #< 10,
+    !,
     suma_(Xs, Ys, Zs, 0).
 
 suma_([X|Xs], [Y|Ys], [Z|Zs], C) :-
     S #= X + Y + C,
-    S #>= 10,
     Z #= S - 10,
-    suma_(Xs, Ys, Zs, 10).
+    !,
+    suma_(Xs, Ys, Zs, 1).
 
-suma_(X, [], X, _).
-suma_([], X, X, _).
+?- suma([9,4,6,1,3,4],[2,8],Sum), Sum = [9,4,6,1,6,2].
+?- suma([2,8],[9,4,6,1,3,4],Sum), Sum = [9,4,6,1,6,2].
+?- suma([6],[9,4,6,1,3,5],Sum), Sum = [9, 4, 6, 1, 4, 1].
+?- suma([9,4,6,1,3,5],[6],Sum), Sum = [9, 4, 6, 1, 4, 1].
+?- suma([9,9,9],[1],Sum), Sum = [1, 0, 0, 0].
+
+
