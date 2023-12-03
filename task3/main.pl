@@ -33,9 +33,9 @@ concat([], Rs, Rs).
 concat([E|Ls], Rs, [E|Fs]) :- concat(Ls, Rs, Fs).
 
 apjungti([], []).
-apjungti([S], S).
 apjungti([S|Ss], R) :-
     apjungti(Ss, R1),
+    !,
     concat(S, R1, R).
 
 ?- apjungti([[a,b],[c],[d,[e,f], g]],R), R = [a,b,c,d,[e,f],g].
@@ -49,16 +49,18 @@ apjungti([S|Ss], R) :-
 el_in_list(E, [E|_]).
 el_in_list(E, [X|Ls]) :- el_in_list(E, Ls), X \= E.
 
-el_not_in_list(E, [X|Ls]) :-  X \= E, el_not_in_list(E, Ls).
+el_not_in_list(E, [X|Ls]) :- X \= E, el_not_in_list(E, Ls).
 el_not_in_list(_, []).
 
 skirtumas([], _, []).
 skirtumas([S|S1], S2, [S|R]) :-
     el_not_in_list(S, S2),
+    !,
     skirtumas(S1, S2, R).
 
 skirtumas([S|S1], S2, R) :-
     el_in_list(S, S2),
+    !,
     skirtumas(S1, S2, R).
 
 ?- skirtumas([a,b,c,d],[d,e],R), R = [a,b,c].
@@ -70,9 +72,6 @@ skirtumas([S|S1], S2, R) :-
 %   4.3. suma(S1,S2,Sum) - S1 ir S2 yra skaičiai vaizduojami skaitmenų sąrašais. Sum - tų skaičių suma vaizduojama skaitmenų sąrašu. Pavyzdžiui:
        %?- suma([9,4,6,1,3,4],[2,8],Sum).
        %Sum = [9,4,6,1,6,2].
-
-list_last([E], E).
-list_last([_|Xs], E) :- list_last(Xs, E).
 
 %rev__([X|Xs], Ys, Zs).
 rev__([], R, R).
@@ -86,6 +85,7 @@ suma(A, B, C) :-
     rev(A, Ar),
     rev(B, Br),
     suma_(Ar, Br, Cr, 0),
+    !,
     rev(C, Cr).
 
 suma_(X, [], X, 0).
