@@ -9,41 +9,19 @@
 % Y axis: I, R, N
 % X axis: J, C, M
 
-?- use_module(library(clpfd)).
+:- use_module(library(clpfd)).
+:- use_module(matrix).
+
 
 cell(o). % occupied by O
 cell(x). % occupied by X
 cell(e). % empty
 
-starting_board([
-    [e, e, e],
-    [e, e, e],
-    [e, e, e]
-], N, M) :- N #= 3, M #= 3.
-
-% empty list and matrix generation
-list_length_fill([], 0, _).
-list_length_fill([E|Ls], N, E):-
-    list_length_fill(Ls, N1, E), N1 #= N - 1.
-
-% N - no of rows
-% M - no of cols
-matrix_dim_fill(Mx, [N, M], El):-
-    list_length_fill(Mx, N, Ls),
-    list_length_fill(Ls, M, El).
-
-?- matrix_dim_fill(Board, [4, 3], e), Board = [[e,e,e], [e,e,e], [e,e,e], [e,e,e]].
-
-% list and matrix indexing
-list_index_elem([El|Ls], 0, El).
-list_index_elem([_|Ls], N, El):-
-    list_index_elem(Ls, N1, El), N1 #= N - 1.
-
-matrix_index_elem(Mx, [I, J], El):-
-    list_index_elem(Mx, I, Ls),
-    list_index_elem(Ls, J, El).
-
-?- list_index_elem([0,1,a,3,4], 2, a).
+%starting_board([
+%    [e, e, e],
+%    [e, e, e],
+%    [e, e, e]
+%], N, M) :- N #= 3, M #= 3.
 
 % state transitions
 prevL_nextL_index_prevEl_nextEl([PrevEl|Ls], [NextEl|Ls], 0, PrevEl, NextEl).
