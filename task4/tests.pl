@@ -10,7 +10,7 @@ test(allTrans0) :-
         [e, e, e],
         [e, e, e]
     ],
-    allTransO(Board, Ns),
+    allTrans(Board, Ns, o),
     Ns = [
         [
             [o, e, e],
@@ -57,6 +57,19 @@ test(allTrans0) :-
             [e, e, e],
             [e, e, o]
         ]
+    ].
+
+test(chain_one_hop) :-
+    Board = [
+        [e, e, e],
+        [e, o, e],
+        [e, e, e]
+    ],
+    chain(Board, Next, _, x),
+    Next = [
+        [e, e, e],
+        [e, o, e],
+        [e, e, x]
     ].
 
 :- end_tests(main).

@@ -8,11 +8,11 @@
 % [I, J] | [R, C] | [N, M]
 % Y axis: I, R, N
 % X axis: J, C, M
-:- module(main, [allTransO/2]).
+:- module(main, [allTrans/3, chain/4]).
 
 :- use_module(library(clpfd)).
+:- use_module(library(lists)).
 :- use_module(matrix).
-
 
 cell(o). % occupied by O
 cell(x). % occupied by X
@@ -47,10 +47,27 @@ transM(Ps, Ns, [I, J], P, N) :-
     transM(B1,B2, [1,1], e, o),
     matrix_index_elem(B2, [1,1], o).
 
-transO(Px, Nx) :- transM(Px, Nx, [_, _], e, o).
-transX(Px, Nx) :- transM(Px, Nx, [_, _], e, x).
+% Px - Previous matriX
+% Nx - Next matriX
+trans(Px, Nx, o) :- transM(Px, Nx, [_, _], e, o).
+trans(Px, Nx, x) :- transM(Px, Nx, [_, _], e, x).
 
-allTransO(Px, Nxs):- findall(Nx, transO(Px, Nx), Nxs).
+allTrans(Px, Nxs, o):- findall(Nx, trans(Px, Nx, o), Nxs).
+allTrans(Px, Nxs, x):- findall(Nx, trans(Px, Nx, x), Nxs).
+
+opposite(x, o).
+opposite(o, x).
+
+% Mx - Start board
+% Ex - end state
+% Lx - list of moves
+% S  - a side for which a trun is taken (either x or o)
+chain(Ex, Ex, [Ex], _).
+chain(Mx, Ex, [Mx|Ls], S) :-
+    trans(Mx, Sx, S),
+    opposite(S, O),
+    chain(Sx, Ex, Ls, O),
+    Mx \= Ex.
 
 %% dr - right
 %line_dr(Board, [Row, Col], Depth):-
