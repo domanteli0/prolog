@@ -1,9 +1,6 @@
 :- begin_tests(main).
 :- use_module(main).
 
-test(reverse) :-
-        reverse([a,b], [b,a]).
-
 test(allTrans0) :-
     Board = [
         [e, e, e],
@@ -59,6 +56,15 @@ test(allTrans0) :-
         ]
     ].
 
+% uncomment this no to time query
+%test(chain_all_posibilites, all(length(Ls, _))) :-
+%    Board = [
+%        [o, e, e],
+%        [e, e, e],
+%        [e, e, e]
+%    ],
+%    chain(Board, _, Ls, o).
+
 test(chain_one_hop) :-
     Board = [
         [e, e, e],
@@ -71,5 +77,13 @@ test(chain_one_hop) :-
         [e, o, e],
         [e, e, x]
     ].
+
+test(horizontal) :-
+    Board = [
+        [x, x, e],
+        [e, o, o],
+        [e, e, e]
+    ],
+    win(Board, 2, o).
 
 :- end_tests(main).
