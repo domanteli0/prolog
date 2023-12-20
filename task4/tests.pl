@@ -86,4 +86,8 @@ test(horizontal) :-
     ],
     win(Board, 2, o).
 
+%test(horizontal_gen) :-
+%    horizontal_gen([2,2], 2, Ls),
+%    Ls = [[[0,0], [0, 1]], [[1, 0], [1, 1]]].
+
 :- end_tests(main).

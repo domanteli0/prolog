@@ -1,4 +1,4 @@
-:- module(list, [list_fill/2, list_length_fill/3, list_index_elem/3]).
+:- module(list, [list_fill/2, list_length_fill/3, list_index_elem/3, mysubseq/2]).
 
 :- use_module(library(clpfd)).
 
@@ -12,3 +12,9 @@ list_index_elem([_|Ls], N, El) :-
     list_index_elem(Ls, N1, El), N1 #= N - 1.
 
 ?- list_index_elem([0,1,a,3,4], 2, a).
+
+mysubseq([W|Whole], [P|Part]) :-
+    prefix(Part, Whole).
+mysubseq([W|Whole], [P|Part]) :-
+    P \= W,
+    mysubseq(Whole, Part).

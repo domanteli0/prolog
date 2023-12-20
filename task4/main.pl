@@ -8,13 +8,15 @@
 % [I, J] | [R, C] | [N, M]
 % Y axis: I, R, N
 % X axis: J, C, M
-:- module(main, [allTrans/3, chain/4, win/3]).
+:- module(main, [allTrans/3, chain/4, win/3, horizontal_gen/3]).
 
 :- use_module(library(clpfd)).
 :- use_module(library(lists)).
 :- use_module(matrix).
 :- use_module(list).
 :- use_module(library(lists)).
+
+todo() :- fail.
 
 cell(o). % occupied by O
 cell(x). % occupied by X
@@ -94,13 +96,15 @@ win(Board, K, S) :-
 %any([El|List], El, Goal) :- clause(El, Goal), any(List, Goal), !.
 %any([_|List], _, Goal)  :- any(List, Goal), !.
 
+horizontal([_|Bs], K, S) :- horizontal(Bs, K, S).
 horizontal([B|_], K, S) :-
     list_length_fill(Win, K, S),
-    subseq(B, Win, _).
-
-horizontal([_|Bs], K, S) :- horizontal(Bs, K, S).
+    mysubseq(B, Win).
 
 
+horizontal_gen([N, M], K, Ls) :- fail.
+
+%diag1([B])
 
 %% dr - right
 %line_dr(Board, [Row, Col], Depth):-
