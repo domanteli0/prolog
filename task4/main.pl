@@ -8,6 +8,7 @@
 % [I, J] | [R, C] | [N, M]
 % Y axis: I, R, N
 % X axis: J, C, M
+:- module(main, [allTransO/2]).
 
 :- use_module(library(clpfd)).
 :- use_module(matrix).
@@ -17,11 +18,17 @@ cell(o). % occupied by O
 cell(x). % occupied by X
 cell(e). % empty
 
-%starting_board([
-%    [e, e, e],
-%    [e, e, e],
-%    [e, e, e]
-%], N, M) :- N #= 3, M #= 3.
+standard_board([
+    [e, e, e],
+    [e, e, e],
+    [e, e, e]
+], N, M) :- N #= 3, M #= 3.
+
+standard_board([
+    [e, e, e],
+    [e, e, e],
+    [e, e, e]
+]).
 
 % state transitions
 prevL_nextL_index_prevEl_nextEl([PrevEl|Ls], [NextEl|Ls], 0, PrevEl, NextEl).
@@ -39,6 +46,11 @@ transM(Ps, Ns, [I, J], P, N) :-
 ?-  matrix_dim_fill(B1, [4, 3], e),
     transM(B1,B2, [1,1], e, o),
     matrix_index_elem(B2, [1,1], o).
+
+transO(Px, Nx) :- transM(Px, Nx, [_, _], e, o).
+transX(Px, Nx) :- transM(Px, Nx, [_, _], e, x).
+
+allTransO(Px, Nxs):- findall(Nx, transO(Px, Nx), Nxs).
 
 %% dr - right
 %line_dr(Board, [Row, Col], Depth):-

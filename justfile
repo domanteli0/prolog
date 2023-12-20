@@ -10,5 +10,8 @@ task3:
 task4:
     swipl -l task4/main.pl
 
+test:
+   swipl -g run_tests -t halt task4/tests.pl
+
 random:
     swipl -l random/main.pl
