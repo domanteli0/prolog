@@ -25,16 +25,20 @@ cell(e). % empty
 
 % state transitions
 prevL_nextL_index_prevEl_nextEl([PrevEl|Ls], [NextEl|Ls], 0, PrevEl, NextEl).
-prevL_nextL_index_prevEl_nextEl([E|PrevL], [E|NextL], I, PrevEl, NextEl):-
+prevL_nextL_index_prevEl_nextEl([E|PrevL], [E|NextL], I, PrevEl, NextEl) :-
     prevL_nextL_index_prevEl_nextEl(PrevL, NextL, I1, PrevEl, NextEl), I1 #= I - 1.
 
-transL(Ps, Ns, I, P, N):- prevL_nextL_index_prevEl_nextEl(Ps, Ns, I, P, N).
+transL(Ps, Ns, I, P, N) :- prevL_nextL_index_prevEl_nextEl(Ps, Ns, I, P, N).
 
-transM(Ps, Ns, [I, J], P, N):-
+transM(Ps, Ns, [I, J], P, N) :-
     transL(Ps, Ns, I, Pl, Nl),
     transL(Pl, Nl, J, P, N).
 
 ?- transM([[a,a], [a,a]], [[a,a], [a,b]], [1,1], a, b).
+
+?-  matrix_dim_fill(B1, [4, 3], e),
+    transM(B1,B2, [1,1], e, o),
+    matrix_index_elem(B2, [1,1], o).
 
 %% dr - right
 %line_dr(Board, [Row, Col], Depth):-
