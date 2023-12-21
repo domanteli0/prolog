@@ -13,8 +13,9 @@ list_index_elem([_|Ls], N, El) :-
 
 ?- list_index_elem([0,1,a,3,4], 2, a).
 
-mysubseq([W|Whole], [P|Part]) :-
+mysubseq([E|Whole], [E|Part]) :-
     prefix(Part, Whole).
 mysubseq([W|Whole], [P|Part]) :-
     P \= W,
     mysubseq(Whole, Part).
+mysubseq([_|Whole], Part) :- mysubseq(Whole, Part).
