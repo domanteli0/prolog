@@ -138,7 +138,17 @@ test(find_win_2) :-
         [e, e, e]
     ],
     chain(Board, WinForO, States, o),
-    length(States, 4),
+    length(States, 3),
     win(WinForO, 3, o).
+
+test(find_win_3) :-
+    Board = [
+        [e, o, x],
+        [e, e, e]
+    ],
+    chain(Board, WinForO, States, o),
+    length(States, 2),
+    win(WinForO, 1, o).
+
 
 :- end_tests(main).

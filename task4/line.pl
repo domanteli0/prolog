@@ -22,6 +22,11 @@ horizontal([Row|_], K, Horizontal) :-
 horizontal([_|Rows], K, Horizontal) :-
     horizontal(Rows, K, Horizontal).
 
+vertical(Bx, K, Vertical) :-
+    matrix_vertical(Bx, V),
+    mysubseq(V, Vertical),
+    length(Vertical, K).
+
 
 diag1_(_, 0, []).
 diag1_([[B|_]|Bs], K1, [B|Acc]) :-
@@ -39,7 +44,3 @@ diag2(Bx, K, Diagonal) :-
     diag1(Fx, K, Diagonal).
 
 
-vertical(Bx, K, Vertical) :-
-    matrix_vertical(Bx, V),
-    mysubseq(V, Vertical),
-    length(Vertical, K).
