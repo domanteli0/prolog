@@ -83,13 +83,13 @@ win(Board, K, S) :-
     list_length_fill(Lines, K, S).
 
 % example query:
-?- Board = [
-    [e, e, e],
-    [e, o, x],
-    [e, e, e]
-    ],
-    chain(Board, WinForO, States, o),
-    length(States, 4),
-    win(WinForO,3, o),
-
-    write_states(States).
+%?- Board = [
+%    [e, e, e, e],
+%    [e, e, o, x],
+%    [e, e, e, e]
+%    ],
+%    chain(Board, WinForO, States, o),
+%    length(States, 4),
+%    win(WinForO,3, o),
+%
+%    write_states(States).

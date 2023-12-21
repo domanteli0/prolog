@@ -13,8 +13,8 @@
 
 matrix_length_line(Bx, K, Line) :- horizontal(Bx, K, Line).
 matrix_length_line(Bx, K, Line) :- vertical(Bx, K, Line).
-%matrix_length_line(Bx, K, Line) :- diag1(Bx, K, Line).
-%matrix_length_line(Bx, K, Line) :- diag2(Bx, K, Line).
+matrix_length_line(Bx, K, Line) :- diag1(Bx, K, Line).
+matrix_length_line(Bx, K, Line) :- diag2(Bx, K, Line).
 
 horizontal([Row|_], K, Horizontal) :-
     mysubseq(Row, Horizontal),
@@ -28,16 +28,13 @@ vertical(Bx, K, Vertical) :-
     length(Vertical, K).
 
 
-diag1_(_, 0, []).
-diag1_([[B|_]|Bs], K1, [B|Acc]) :-
-    K1 #> 0,
-    K1 #= K + 1,
-    diag1_(Bs, K, Acc).
+diag1([], K, []) :- K #= 0.
+diag1([[E|_]|Bx], K, [E|Ds]) :-
+    maplist(list_tail, Bx, RBx),
+    K1 #= K - 1,
+    diag1(RBx, K1, Ds).
 
-diag1(Bx, K, Diagonal) :-
-    corners(Bx, Cx),
-    diag1_(Cx, K, Diagonal),
-    length(Diagonal, K).
+list_tail([_|Es], Es).
 
 diag2(Bx, K, Diagonal) :-
     matrix_flip_vertical(Bx, Fx),

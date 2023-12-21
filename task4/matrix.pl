@@ -64,6 +64,7 @@ corners(Mx, Cx) :-
 %    reverse(Cx, RCx),
 %    corners_(RMx, RCx).
     corners_(Mx, Cx).
+
 corners_(Mx, Cx) :-
     prefix(Bx, Mx),
     maplist(prefix_ofLen(_), Bx, Cx).
